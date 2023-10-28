@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 
-const Livre = mongoose.model('Livre', {
-  title: {
+const Auteur = mongoose.model('auteur', {
+  lastName: {
     type: String,
     required: true
   },
-  author: {
+  firstName: {
     type: String,
     required: true
   },
-  annee: {
-    type: Number,
+  nationality: {
+    type: String,
     required: true
-  }
+  },
 });
 
-module.exports = Livre;
+module.exports = Auteur;

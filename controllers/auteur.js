@@ -30,7 +30,7 @@ const fetchAuthors = (req, res) => {
     .catch((error) => ({
       error:error.message,
       message: "probléme d'extraction" ,
-    }));
+ }));
 };
 
 const getAuteurById = (req, res) => {
@@ -99,5 +99,6 @@ const deleteAuteur = (req, res) => {
       });
     });
 };
+
 
 module.exports = { addAuthor, fetchAuthors, getAuteurById, updateAuteur, deleteAuteur };

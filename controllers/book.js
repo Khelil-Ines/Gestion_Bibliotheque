@@ -7,6 +7,12 @@ const addBook = (req, res, next) => {
   const newBook = new Book({ title, auteur, categorie });
     Aut.findOne({ _id: auteur }).then((response) => {
             if (response){
+                req.Aut = {
+                    _id: auteur,
+                    lastname: response.lastname,
+                    firstname: response.firstname,
+                    nationality: response.nationality
+                  }
             next()     
   }else {
     res.status(401).json({ error: "Auteur introuvable!"})
@@ -14,6 +20,10 @@ const addBook = (req, res, next) => {
 
      cat.findOne({ _id: categorie }).then((response) => {
         if (response){
+            req.cat = {
+                _id: categorie,
+                title: response.title
+              }
             next()     
 }else {
     res.status(401).json({ error: "Categorie introuvable!"})

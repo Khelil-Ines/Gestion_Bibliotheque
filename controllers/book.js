@@ -2,42 +2,66 @@ const Book = require("../models/book");
 const cat = require("../models/category")
 const Aut = require("../models/auteur");
 // Créer un nouveau book
+// const addBook = (req, res, next) => {
+//   const { title, auteur, categorie } = req.body;
+//   const newBook = new Book({ title, auteur, categorie });
+//     Aut.findOne({ _id: auteur }).then((response) => {
+//             if (!response){
+//               return res.status(401).json({ error: "Auteur introuvable!"})
+                
+//   }else {
+//     cat.findOne({ _id: categorie }).then((response) => {
+//       if (!response){
+//         return res.status(401).json({ error: "Categorie introuvable!"})
+//         }else {
+//             newBook
+//             .save()
+//             .then((newBook) => {
+//               res.json(newBook);
+//             })
+//             // .catch((err) => {
+//             //   res.status(400).json({ erreur: "Échec de la création du livre" });
+//             // });
+
+// }})
+// }})
+
+// }
+
+
 const addBook = (req, res, next) => {
   const { title, auteur, categorie } = req.body;
   const newBook = new Book({ title, auteur, categorie });
-    Aut.findOne({ _id: auteur }).then((response) => {
-            if (response){
-                req.Aut = {
-                    _id: auteur,
-                    lastname: response.lastname,
-                    firstname: response.firstname,
-                    nationality: response.nationality
-                  }
-            next()     
-  }else {
-    res.status(401).json({ error: "Auteur introuvable!"})
-}})
 
-     cat.findOne({ _id: categorie }).then((response) => {
-        if (response){
-            req.cat = {
-                _id: categorie,
-                title: response.title
-              }
-            next()     
-}else {
-    res.status(401).json({ error: "Categorie introuvable!"})
-
-}})
-  newBook
-    .save()
-    .then((newBook) => {
-      res.json(newBook);
+  Aut.findOne({ _id: auteur })
+    .then((authorResponse) => {
+      if (!authorResponse) {
+        res.status(401).json({ error: "Auteur introuvable!" });
+      } else {
+        cat.findOne({ _id: categorie })
+          .then((categoryResponse) => {
+            if (!categoryResponse) {
+              res.status(401).json({ error: "Categorie introuvable!" });
+            } else {
+              newBook.save()
+                .then((newBook) => {
+                  res.json(newBook);
+                })
+                .catch((err) => {
+                  res.status(400).json({ erreur: "Échec de la création du livre" });
+                });
+            }
+          })
+          .catch((categoryError) => {
+            res.status(400).json({ erreur: "Erreur lors de la recherche de la catégorie" });
+          });
+      }
     })
-    .catch((err) => {
-      res.status(400).json({ erreur: "Échec de la création du livre" });
+    .catch((authorError) => {
+      res.status(400).json({ erreur: "Erreur lors de la recherche de l'auteur" });
     });
-}
+};
+
 
 // Récupérer tous les books
 const fetchBooks = (req, res) => {

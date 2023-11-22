@@ -24,5 +24,6 @@ userSchema.virtual('fullname').get(function(){
     
     return userObject;
    }
+   userSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model("User", userSchema);

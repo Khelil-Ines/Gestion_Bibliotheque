@@ -15,4 +15,5 @@ router.delete("/:id", bookController.DeleteBook);
 
 router.get('/books/author/:id',bookController.findbookbyauthor);
 
+router.post("/addbookvalidauthor", bookController.creerbookavecvalidationauteur)
   module.exports = router;

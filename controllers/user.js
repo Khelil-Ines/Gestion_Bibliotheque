@@ -21,10 +21,12 @@ exports.signup = (req, res, next) => {
         });
       })
       .catch((error) => {
-        res
-          .status(400)
-          .json({ error: error.message, message: "Données invalides" });
-      });
+        if (error.name === 'ValidationError' && error.errors.email.kind === 'unique') {
+            res.status(400).json({ error: 'Email déjà utilisé', message: 'Données invalides' });
+          } else {
+            res.status(400).json({ error: error.message, message: 'Données invalides' });
+          }
+        });
   });
 };
 exports.login = (req, res, next) => {

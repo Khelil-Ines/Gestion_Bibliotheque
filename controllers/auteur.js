@@ -1,4 +1,4 @@
-const Auteur = require('../models/auteur');
+const Auteur = require("../models/auteur");
 
 
 const addAuthor = (req, res) => {
@@ -18,6 +18,43 @@ const addAuthor = (req, res) => {
       });
     });
 };
+
+// Ajout avec test unicité nom et require nom
+// const addAuthorUnique = (req, res) => {
+//   const author = new Auteur(req.body);
+//   Auteur.findOne({ nom: author.nom })
+//     .then((auteur) => {
+//       if (auteur) {
+//         res.status(400).json({
+//           error: "Cet auteur existe déjà!",
+//           message: "Données invalides",
+//         });
+//       } else {
+//         author
+//           .save()
+//           .then(() => {
+//             res.status(201).json({
+//               models: author,
+//               message: "auteur crée!",
+//             });
+//           })
+//           .catch((error) => {
+//             res.status(400).json({
+//               error: error.message,
+//               message: "Données invalides",
+//             });
+//           });
+//       }
+//     })
+//     .catch((error) => {
+//       res.status(400).json({
+//         error: error.message,
+//         message: "Données invalides",
+//       });
+//     });
+// };
+
+
 
 const fetchAuthors = (req, res) => {
   Auteur.find()

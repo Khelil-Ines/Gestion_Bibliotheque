@@ -116,10 +116,17 @@ const DeleteBook = (req, res) => {
     });
 }
 
+const findbookbyauthor= (req, res) => {
+  Book.findByAuthor(req.params.id)
+    .then(books => res.json(books)) 
+    .catch(err => res.status(500).json({error: err}));
+}
+
 module.exports = {
     addBook,
     fetchBooks,
     fetchBookById,
     UpdateBook,
     DeleteBook,
+    findbookbyauthor
 }

@@ -13,5 +13,6 @@ router.patch("/:id",bookController.UpdateBook );
 
 router.delete("/:id", bookController.DeleteBook);
 
+router.get('/books/author/:id',bookController.findbookbyauthor);
 
   module.exports = router;
